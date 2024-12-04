@@ -1,0 +1,24 @@
+/* App.css */
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  max-width: 700px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.main-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 60px;
+  width: 100%;
+}
