@@ -1,17 +1,26 @@
 import { useState } from "react";
-import { Common } from "./Common";
+import { useNavigate } from "react-router-dom";
 
-export const useLogin = () => {
-  const { Navi, OnRotateBack } = Common();
+export const LoginFunc = () => {
+  const [rotate, setRotate] = useState(true);
+  const [rotateBack, setRotateBack] = useState(false);
+  const Navi = useNavigate();
+
+  const PageStart = () => {
+    setTimeout(() => {
+      setRotate(false);
+    }, 400);
+  };
+
   const handleLoginToSignup = () => {
-    OnRotateBack();
+    setRotateBack(true);
     setTimeout(() => {
       Navi("/signup");
     }, 400);
   };
 
   const handleLoginToFind = () => {
-    OnRotateBack();
+    setRotateBack(true);
     setTimeout(() => {
       Navi("/findinfo");
     }, 400);
@@ -52,6 +61,9 @@ export const useLogin = () => {
   };
 
   return {
+    PageStart,
+    rotate,
+    rotateBack,
     LoginUsername,
     setLoginUsername,
     LoginPassword,

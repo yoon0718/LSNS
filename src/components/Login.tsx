@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/Login.css";
-import { Common } from "../hooks/Common";
-import { useLogin } from "../hooks/useLogin";
+import { LoginFunc } from "../hooks/LoginFunc";
 import thumbnail from "../images/thumbnail.jpg";
 
 const Login: React.FC = () => {
-  const { rotate, rotateBack, PageStart } = Common();
   const {
+    PageStart,
+    rotate,
+    rotateBack,
     LoginUsername,
     setLoginUsername,
     LoginPassword,
@@ -15,8 +16,11 @@ const Login: React.FC = () => {
     handleLogin,
     handleLoginToSignup,
     handleLoginToFind,
-  } = useLogin();
-  PageStart();
+  } = LoginFunc();
+
+  useEffect(() => {
+    PageStart();
+  }, [PageStart]);
 
   return (
     <div
