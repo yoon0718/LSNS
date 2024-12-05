@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { CommonFunc } from "./CommonFunc";
 
 export const SignupFunc = () => {
-  const [rotate, setRotate] = useState(true);
-  const [rotateBack, setRotateBack] = useState(false);
-  const Navi = useNavigate();
-
-  const PageStart = () => {
-    setTimeout(() => {
-      setRotate(false);
-    }, 400);
-  };
-  const [SignupUsername, setSignupUsername] = useState("");
-  const [SignupPassword, setSignupPassword] = useState("");
+  const {
+    rotate,
+    rotateBack,
+    pageStart,
+    handlePageTrans,
+    Navi,
+    username,
+    setUsername,
+    password,
+    setPassword,
+  } = CommonFunc();
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -22,24 +22,15 @@ export const SignupFunc = () => {
   const [passwordValidationMessage, setPasswordValidationMessage] =
     useState("");
 
-  const handleSignupToLogin = () => {
-    setRotateBack(true);
-    setTimeout(() => {
-      Navi("/login");
-    }, 400);
-  };
-
-  const isUsernameValid = /^[a-z0-9]{1,20}$/.test(SignupUsername);
+  const isUsernameValid = /^[a-z0-9]{1,20}$/.test(username);
   const isPasswordValid =
-    /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[a-z\d!@#$%^&*]{6,}$/.test(
-      SignupPassword
-    );
+    /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[a-z\d!@#$%^&*]{6,}$/.test(password);
 
   const isPhoneValid = /^[0-9]*$/.test(phone);
-  const isPasswordMatch = SignupPassword === confirmPassword;
+  const isPasswordMatch = password === confirmPassword;
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const password = e.target.value;
-    setSignupPassword(password);
+    setPassword(password);
 
     if (
       password.trim() !== "" &&
@@ -54,8 +45,8 @@ export const SignupFunc = () => {
   };
 
   const isSignupButtonEnabled =
-    SignupUsername.trim() !== "" &&
-    SignupPassword.trim() !== "" &&
+    username.trim() !== "" &&
+    password.trim() !== "" &&
     confirmPassword.trim() !== "" &&
     phone.trim() !== "" &&
     email.trim() !== "" &&
@@ -67,18 +58,13 @@ export const SignupFunc = () => {
     !usernameMessage.includes("불가능");
 
   const handleCheckDuplicate = async () => {
-    if (!SignupUsername.trim() || !isUsernameValid) {
-      alert("유효한 아이디를 입력하세요.");
-      return;
-    }
-
     try {
       const response = await fetch(`http://118.220.59.105:3005/account/check`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: SignupUsername }),
+        body: JSON.stringify({ id: username }),
       });
       const result = await response.text();
 
@@ -99,7 +85,7 @@ export const SignupFunc = () => {
   ) => {
     setConfirmPassword(e.target.value);
     setPasswordMatchMessage(
-      e.target.value !== SignupPassword ? "비밀번호가 동일하지 않습니다." : ""
+      e.target.value !== password ? "비밀번호가 동일하지 않습니다." : ""
     );
   };
 
@@ -113,8 +99,8 @@ export const SignupFunc = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: SignupUsername,
-          password: SignupPassword,
+          id: username,
+          password: password,
           phone: phone,
           email: email,
         }),
@@ -133,18 +119,18 @@ export const SignupFunc = () => {
   };
 
   return {
-    PageStart,
+    pageStart,
     rotate,
     rotateBack,
-    handleSignupToLogin,
-    SignupUsername,
-    setSignupUsername,
+    handleSignupToLogin: () => handlePageTrans("/login"),
+    username,
+    setUsername,
     setIsUsernameChecked,
     setUsernameMessage,
     handleCheckDuplicate,
     isUsernameValid,
     usernameMessage,
-    SignupPassword,
+    password,
     handlePasswordChange,
     passwordValidationMessage,
     confirmPassword,

@@ -5,18 +5,18 @@ import thumbnail from "../images/thumbnail.jpg";
 
 const Signup: React.FC = () => {
   const {
-    PageStart,
+    pageStart,
     rotate,
     rotateBack,
     handleSignupToLogin,
-    SignupUsername,
-    setSignupUsername,
+    username,
+    setUsername,
     setIsUsernameChecked,
     setUsernameMessage,
     handleCheckDuplicate,
     isUsernameValid,
     usernameMessage,
-    SignupPassword,
+    password,
     handlePasswordChange,
     passwordValidationMessage,
     confirmPassword,
@@ -31,8 +31,8 @@ const Signup: React.FC = () => {
   } = SignupFunc();
 
   useEffect(() => {
-    PageStart();
-  }, [PageStart]);
+    pageStart();
+  }, [pageStart]);
 
   return (
     <div
@@ -54,9 +54,9 @@ const Signup: React.FC = () => {
             type="text"
             placeholder="아이디 (소문자 및 숫자 조합, 최대 20자)"
             className="signup-input-field username-input"
-            value={SignupUsername}
+            value={username}
             onChange={(e) => {
-              setSignupUsername(e.target.value);
+              setUsername(e.target.value);
               setIsUsernameChecked(false);
               setUsernameMessage("");
             }}
@@ -65,7 +65,7 @@ const Signup: React.FC = () => {
             type="button"
             className="check-duplicate-button"
             onClick={handleCheckDuplicate}
-            disabled={!isUsernameValid || SignupUsername.trim() === ""}
+            disabled={!isUsernameValid || !username.trim()}
           >
             중복확인
           </button>
@@ -84,7 +84,7 @@ const Signup: React.FC = () => {
           type="password"
           placeholder="비밀번호 (소문자+숫자+특수문자, 최소 6자)"
           className="signup-input-field"
-          value={SignupPassword}
+          value={password}
           onChange={handlePasswordChange}
         />
         {passwordValidationMessage && (

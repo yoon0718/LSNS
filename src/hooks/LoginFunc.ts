@@ -1,50 +1,32 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { CommonFunc } from "../hooks/CommonFunc";
 
 export const LoginFunc = () => {
-  const [rotate, setRotate] = useState(true);
-  const [rotateBack, setRotateBack] = useState(false);
-  const Navi = useNavigate();
+  const {
+    rotate,
+    rotateBack,
+    pageStart,
+    handlePageTrans,
+    username,
+    setUsername,
+    password,
+    setPassword,
+  } = CommonFunc();
 
-  const PageStart = () => {
-    setTimeout(() => {
-      setRotate(false);
-    }, 400);
-  };
-
-  const handleLoginToSignup = () => {
-    setRotateBack(true);
-    setTimeout(() => {
-      Navi("/signup");
-    }, 400);
-  };
-
-  const handleLoginToFind = () => {
-    setRotateBack(true);
-    setTimeout(() => {
-      Navi("/findinfo");
-    }, 400);
-  };
-
-  const [LoginUsername, setLoginUsername] = useState("");
-  const [LoginPassword, setLoginPassword] = useState("");
-
-  const isLoginButtonEnabled =
-    LoginUsername.trim() !== "" && LoginPassword.trim() !== "";
+  const isLoginButtonEnabled = username.trim() !== "" && password.trim() !== "";
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://118.220.59.105:3005/account/v1/${LoginUsername}`,
+        `http://118.220.59.105:3005/account/v1/${username}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: LoginUsername,
-            pw: LoginPassword,
+            id: username,
+            pw: password,
           }),
         }
       );
@@ -61,16 +43,16 @@ export const LoginFunc = () => {
   };
 
   return {
-    PageStart,
+    pageStart,
     rotate,
     rotateBack,
-    LoginUsername,
-    setLoginUsername,
-    LoginPassword,
-    setLoginPassword,
+    username,
+    setUsername,
+    password,
+    setPassword,
     isLoginButtonEnabled,
     handleLogin,
-    handleLoginToSignup,
-    handleLoginToFind,
+    handleLoginToSignup: () => handlePageTrans("/signup"),
+    handleLoginToFind: () => handlePageTrans("/findinfo"),
   };
 };

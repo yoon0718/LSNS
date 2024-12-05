@@ -1,29 +1,21 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { CommonFunc } from "./CommonFunc";
 
 export const FindInfoFunc = () => {
-  const [rotate, setRotate] = useState(true);
-  const [rotateBack, setRotateBack] = useState(false);
-  const Navi = useNavigate();
-
-  const PageStart = () => {
-    setTimeout(() => {
-      setRotate(false);
-    }, 400);
-  };
+  const {
+    rotate,
+    rotateBack,
+    pageStart,
+    handlePageTrans,
+    Navi,
+    username,
+    setUsername,
+  } = CommonFunc();
   const [FindIdPhone, setFindIdPhone] = useState("");
   const [FindPasswordPhone, setFindPasswordPhone] = useState("");
-  const [username, setUsername] = useState("");
   const [isFindIdPhoneValid, setIsFindIdPhoneValid] = useState(false);
   const [isFindPasswordPhoneValid, setIsFindPasswordPhoneValid] =
     useState(false);
-
-  const handleFindToLogin = () => {
-    setRotateBack(true);
-    setTimeout(() => {
-      Navi("/login");
-    }, 400);
-  };
 
   const handleFindIdPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -60,7 +52,7 @@ export const FindInfoFunc = () => {
         alert(result);
       } else {
         alert(`회원님의 아이디는 ${result} 입니다.`);
-        Navi(0);
+        Navi("/login");
       }
     } catch (error) {
       alert("정보를 찾는 중 오류가 발생했습니다.");
@@ -69,13 +61,14 @@ export const FindInfoFunc = () => {
 
   const handleFindPassword = () => {
     alert("아직 미구현!");
+    Navi("/login");
   };
 
   return {
-    PageStart,
+    pageStart,
     rotate,
     rotateBack,
-    handleFindToLogin,
+    handleFindToLogin: () => handlePageTrans("/login"),
     FindIdPhone,
     handleFindIdPhoneChange,
     isFindIdPhoneValid,

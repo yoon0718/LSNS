@@ -5,13 +5,13 @@ import thumbnail from "../images/thumbnail.jpg";
 
 const Login: React.FC = () => {
   const {
-    PageStart,
+    pageStart,
     rotate,
     rotateBack,
-    LoginUsername,
-    setLoginUsername,
-    LoginPassword,
-    setLoginPassword,
+    username,
+    setUsername,
+    password,
+    setPassword,
     isLoginButtonEnabled,
     handleLogin,
     handleLoginToSignup,
@@ -19,8 +19,8 @@ const Login: React.FC = () => {
   } = LoginFunc();
 
   useEffect(() => {
-    PageStart();
-  }, [PageStart]);
+    pageStart();
+  }, [pageStart]);
 
   return (
     <div
@@ -41,15 +41,15 @@ const Login: React.FC = () => {
           type="text"
           placeholder="사용자 이름, 전화번호 또는 이메일 주소"
           className="login-input-field"
-          value={LoginUsername}
-          onChange={(e) => setLoginUsername(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
           placeholder="비밀번호"
           className="login-input-field"
-          value={LoginPassword}
-          onChange={(e) => setLoginPassword(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button
           type="submit"

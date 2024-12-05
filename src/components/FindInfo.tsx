@@ -5,7 +5,7 @@ import thumbnail from "../images/thumbnail.jpg";
 
 const FindInfo: React.FC = () => {
   const {
-    PageStart,
+    pageStart,
     rotate,
     rotateBack,
     handleFindToLogin,
@@ -22,8 +22,8 @@ const FindInfo: React.FC = () => {
   } = FindInfoFunc();
 
   useEffect(() => {
-    PageStart();
-  });
+    pageStart();
+  }, [pageStart]);
 
   return (
     <div
